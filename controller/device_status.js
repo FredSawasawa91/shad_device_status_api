@@ -46,7 +46,7 @@ exports.getAllStatuses = (req, res, next) => {
         return res.status(400).json({ error: "User id parameter is missing." });
     }
 
-    let sql = `SELECT device_status.device_id, device_status.status, device_status.createdAt, sender.sender_id, receiver.receiver_id FROM device_status
+    let sql = `SELECT device_status.device_id, device_status.status, strftime('%Y-%m-%d %H:%M:%S', device_status.createdAt) AS createdAt, sender.sender_id, receiver.receiver_id FROM device_status
                 JOIN sender on device_status.device_id = sender.sender_id
                 JOIN receiver on sender.receiver_id = receiver.receiver_id
                 JOIN user ON receiver.user_id = user.user_id
@@ -68,7 +68,7 @@ exports.getAllDeviceStatuses = (req, res, next) => {
         return res.status(400).json({ error: "User id parameter is missing." });
     }
 
-    let sql = `SELECT device_status.device_id, device_status.status, device_status.createdAt, sender.sender_id, receiver.receiver_id FROM device_status
+    let sql = `SELECT device_status.device_id, device_status.status, device_status.status, strftime('%Y-%m-%d %H:%M:%S', device_status.createdAt) AS createdAt, sender.sender_id, receiver.receiver_id FROM device_status
                 JOIN sender on device_status.device_id = sender.sender_id
                 JOIN receiver on sender.receiver_id = receiver.receiver_id
                 JOIN user ON receiver.user_id = user.user_id
